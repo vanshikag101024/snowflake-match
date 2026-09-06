@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang=""en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Remix Snowflake Match</title>
+  <meta name="description" content="Match falling snowflakes with their corresponding crystal gems in this enchanting winter wonderland game." />
+  <meta property="og:title" content="Remix Snowflake Match" />
+  <meta property="og:description" content="Match falling snowflakes with their corresponding crystal gems in this enchanting winter wonderland game." />
+  
+  <script></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2/family=Fredoka:wght@400;600;700;800;900&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet"/>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            fredoka: ['"Fredoka"', 'sans-serif'],
+            quicksand: ['"Quicksand"', 'sans-serif'],
+          },
+          colors: {
+            frost: {
+              100: '#E0F7FA',
+              200: '#B2EBF2',
+              300: '#80DEEA',
+              400: '#4DD0E1',
+              500: '#00BCD4',
+              600: '#00ACC1',
+              800: '#006064',
+            },
+            candypink: '#FF5E97',
+            candyamber: '#FFB800',
+            magicsky: '#1D1E4E'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="fixed inset-0 h-screen w-screen overflow-hidden flex flex-col justify-between text-slate-800 antialiased selection:bg-cyan-300 selection:text-blue-950 bg-slate-950 select-none">
+  
+  <div class="fixed inset-0 z-0 bg-center bg-cover bg-no-repeat transition-all duration-700 pointer-events-none"data-purpose="game-background" style=""background-image: url('https://lh3.googleusercontent.com/aida/AEtjO1XFs8maE-bxQSDZaZ91czqKte08OXrcAYt2Nv6cGijuSlSWMX6kHY9FD-NDZ0h8VthR9Rb7f-DU0-b-x8LN5SWiYIMYX1QN8WgkxJBAzwmlBA1QLOky6tU-FUNjGrBQeOc9UNAnm1emmEtXXWVjX0vaCyr9iwEgbYuGumJr3SAKrnTqKI-pIRal219Dovvep9-fb7aA8gnDXVOsM2zh7EaJTipx5rL-zdIwSVMZQ-XxBDCQjzRmh6ndSw');">
+    <div class="absolute inset-0 bg-gradient-to-b from-indigo-950/40 via-transparent to-blue-950/70"></div>
+  </div>
+
+  <canvas class="fixed inset-0 z-10 pointer-events-none" data-purpose="snow-particles" id="snowfall-canvas"></canvas>
+
+  <div class="relative z-20 flex flex-col items-center justify-center h-full w-full max-w-4xl mx-auto px-4 py-4 text-center overflow-hidden transition-opacity duration-300" id="home-view">
+    
+    <div class="absolute top-3 right-3 sm:top-5 sm:right-5 z-30 flex items-center gap-2">
+      <button id="home-sfx-btn" onclick="toggleSFX()" class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-white/25 hover:bg-white/35 active:scale-95 backdrop-blur-md border-2 border-white/60 text-white font-fredoka font-bold text-lg sm:text-xl flex items-center justify-center shadow-lg drop-shadow cursor-pointer transition" title="Toggle Sound">
+        🔊
+      </button>
+    </div>
+
+    <main class="flex flex-col items-center justify-center text-center py-2 w-full" data-purpose="hero-title-section">
+      <div class="relative flex flex-col items-center max-w-2xl px-2">
+        
+ " "
