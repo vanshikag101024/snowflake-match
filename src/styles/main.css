@@ -1,24 +1,22 @@
-@import "tailwindcss";
-
-@layer base {
   body {
     font-family: 'Fredoka', 'Quicksand', sans-serif;
     user-select: none;
     -webkit-user-select: none;
   }
-}
 
 .title-pop {
-  text-shadow:none    0 2px 0
-    0 4px 0
-    0 6px 0
+  text-shadow:none    
+    0 2px 0 #38bdf8,
+    0 4px 0 #0284c7,
+    0 6px 0 #0369a1,
     0 8px 12px rgba(15, 23, 42, 0.8);
   letter-spacing: 0.04em;
 }
 
 .gold-pop {
-  text-shadow:none    0 2px 0
-    0 4px 0
+  text-shadow:none    
+    0 2px 0 #f59e0b,
+    0 4px 0 #d97706,
     0 6px 10px rgba(120, 53, 15, 0.7);
 }
 
