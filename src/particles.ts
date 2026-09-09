@@ -114,23 +114,18 @@ export class ParticleEngine {
       this.ctx.beginPath();
       this.ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
       this.ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha})`;
-      this.ctx.shadowBlur = f.layer === 3 ? 8 : 2;
-      this.ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
       this.ctx.fill();
     }
 
-    this.ctx.shadowBlur = 10;
     for (let i = 0; i < this.sparkles.length; i++) {
       const sp = this.sparkles[i];
       this.ctx.beginPath();
       this.ctx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
-      this.ctx.fillStyle = '#ffffff';
-      this.ctx.shadowColor = '#ffffff';
+      this.ctx.fillStyle = '#f59e0b';
       this.ctx.globalAlpha = Math.max(0, sp.alpha);
       this.ctx.fill();
     }
     this.ctx.globalAlpha = 1;
-    this.ctx.shadowBlur = 0;
   }
 
   public loop = (): void => {

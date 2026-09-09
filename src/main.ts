@@ -100,8 +100,8 @@ function init(): void {
       audioManager.playMatch(combo, inDangerZone);
       if (ui) {
         ui.showArenaToast(
-          inDangerZone ? `⚡ FUTURE PERFECT! +${pts}` : `FUTURE SYNC +${pts}`,
-          inDangerZone ? '#38bdf8' : '#c084fc'
+          inDangerZone ? `⚡ PERFECT CATCH! +${pts}` : `MATCH! +${pts}`,
+          inDangerZone ? '#f59e0b' : '#38bdf8'
         );
       }
       if (particleEngine) {
@@ -114,7 +114,7 @@ function init(): void {
       }
     },
     onMatchMiss: () => {
-      if (ui) ui.showArenaToast('FUTURE MISS', '#f87171');
+      if (ui) ui.showArenaToast('MISS!', '#ef4444');
     },
     onGameOver: (finalScore, isNewHighScore) => {
       if (ui) {

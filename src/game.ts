@@ -90,7 +90,7 @@ export class GameEngine {
   private spawnSnowflake(): void {
     if (!this.state.isGameRunning || this.state.isGameOver) return;
     const randomShape = SHAPE_KEYS[Math.floor(Math.random() * SHAPE_KEYS.length)];
-    const baseSpeed = 0.72 + Math.min(this.state.level, 12) * 0.10;
+    const baseSpeed = 1.25 + Math.min(this.state.level, 12) * 0.12;
 
     this.currentFlake = {
       id: Date.now(),
