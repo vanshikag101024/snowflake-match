@@ -66,7 +66,7 @@ private dangerLine: HTMLElement | null;
     let html = '';
     for (let i = 0; i < 3; i++) {
       const active = i < lives;
-      html += `<div class="w-3 h-3 rounded-full ${active ? 'bg-sky-400 shadow-sm shadow-sky-400/50' : 'bg-slate-800'} transition-all"></div>`;
+      html += `<div class="w-3.5 h-3.5 rounded-full border ${active ? 'bg-cyan-400 border-cyan-300 shadow-lg shadow-cyan-400/80 animate-pulse' : 'bg-slate-900 border-slate-700'} transition-all"></div>`;
     }
     this.livesEl.innerHTML = html;
   }
@@ -122,17 +122,17 @@ private dangerLine: HTMLElement | null;
       const slotNum = idx + 1;
 
       const btn = document.createElement('button');
-      btn.className = `gem-btn-card relative flex flex-col items-center justify-center gap-1.5 p-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-200 cursor-pointer select-none transition-all`;
+      btn.className = `gem-btn-card relative flex flex-col items-center justify-center gap-1.5 p-3 rounded-2xl border ${def.borderClass} text-slate-200 cursor-pointer select-none transition-all`;
       btn.setAttribute('data-shape', shapeKey);
 
       btn.innerHTML = `
-        <span class="text-[10px] font-mono text-slate-500 font-semibold uppercase tracking-wider">
-          Key ${slotNum}
+        <span class="text-[9px] font-orbitron font-bold text-cyan-400 uppercase tracking-widest px-2 py-0.5 rounded bg-slate-950/80 border border-cyan-500/30">
+          KEY ${slotNum}
         </span>
-        <div class="w-8 h-8 flex items-center justify-center my-0.5">
+        <div class="w-10 h-10 flex items-center justify-center my-0.5">
           ${def.gemSvg}
         </div>
-        <span class="text-xs font-semibold tracking-wide text-slate-300">
+        <span class="text-xs font-orbitron font-extrabold tracking-wider text-slate-100">
           ${def.title}
         </span>
       `;

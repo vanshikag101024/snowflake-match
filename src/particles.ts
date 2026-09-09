@@ -64,7 +64,7 @@ export class ParticleEngine {
     };
   }
 
-  public triggerBurst(x: number, y: number, color: string = '#7dd3fc', count: number = 24): void {
+  public triggerBurst(x: number, y: number, color: string = '#ffffff', count: number = 24): void {
     for (let i = 0; i < count; i++) {
       const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
       const speed = Math.random() * 6 + 2;
@@ -75,7 +75,7 @@ export class ParticleEngine {
         vy: Math.sin(angle) * speed,
         alpha: 1,
         size: Math.random() * 3.5 + 2,
-        color
+        color: '#ffffff'
       });
     }
   }
@@ -115,7 +115,7 @@ export class ParticleEngine {
       this.ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
       this.ctx.fillStyle = `rgba(255, 255, 255, ${f.alpha})`;
       this.ctx.shadowBlur = f.layer === 3 ? 8 : 2;
-      this.ctx.shadowColor = 'rgba(186, 230, 253, 0.8)';
+      this.ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
       this.ctx.fill();
     }
 
@@ -124,8 +124,8 @@ export class ParticleEngine {
       const sp = this.sparkles[i];
       this.ctx.beginPath();
       this.ctx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
-      this.ctx.fillStyle = sp.color;
-      this.ctx.shadowColor = sp.color;
+      this.ctx.fillStyle = '#ffffff';
+      this.ctx.shadowColor = '#ffffff';
       this.ctx.globalAlpha = Math.max(0, sp.alpha);
       this.ctx.fill();
     }

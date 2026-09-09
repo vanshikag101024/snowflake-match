@@ -11,55 +11,49 @@ export interface EnhancedCrystalDef extends CrystalDefinition {
 export const CRYSTAL_DEFINITIONS: Record<ShapeType, EnhancedCrystalDef> = {
   star: {
     id: 'star',
-    title: 'Star',
+    title: 'Future Nexus',
     cssClass: 'bg-slate-900/80 hover:bg-slate-800',
-    borderClass: 'border-slate-800',
+    borderClass: 'border-cyan-500/40',
     color: '#38bdf8',
-    glowColor: 'rgba(56, 189, 248, 0.4)',
+    glowColor: 'rgba(56, 189, 248, 0.6)',
     hotkey: '1',
-    badgeBg: 'bg-slate-800',
-    badgeText: 'text-slate-300',
-    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-sky-400">
+    badgeBg: 'bg-cyan-950',
+    badgeText: 'text-cyan-300',
+    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-cyan-400 futuristic-glow">
       <g stroke="currentColor" stroke-width="4.5" stroke-linecap="round" fill="none">
-        <line x1="50" y1="12" x2="50" y2="88"/>
-        <line x1="17" y1="31" x2="83" y2="69"/>
-        <line x1="17" y1="69" x2="83" y2="31"/>
+        <line x1="50" y1="10" x2="50" y2="90"/>
+        <line x1="15" y1="30" x2="85" y2="70"/>
+        <line x1="15" y1="70" x2="85" y2="30"/>
         <polyline points="44,22 50,14 56,22"/>
         <polyline points="44,78 50,86 56,78"/>
-        <polyline points="24,28 18,32 24,40"/>
-        <polyline points="76,60 82,68 76,72"/>
-        <polyline points="24,60 18,68 24,72"/>
-        <polyline points="76,28 82,32 76,40"/>
+        <polygon points="50,40 60,50 50,60 40,50" fill="#0284c7" fill-opacity="0.5"/>
       </g>
       <circle cx="50" cy="50" r="7" fill="currentColor"/>
     </svg>`,
     svg: '',
-    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-sky-300">
-      <g stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none">
+    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-white">
+      <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" fill="none">
         <line x1="50" y1="10" x2="50" y2="90"/>
         <line x1="15" y1="30" x2="85" y2="70"/>
         <line x1="15" y1="70" x2="85" y2="30"/>
         <polyline points="43,20 50,12 57,20"/>
         <polyline points="43,80 50,88 57,80"/>
-        <polyline points="23,27 17,31 23,39"/>
-        <polyline points="77,61 83,69 77,73"/>
-        <polyline points="23,61 17,69 23,73"/>
-        <polyline points="77,27 83,31 77,39"/>
+        <polygon points="50,38 62,50 50,62 38,50" fill="#ffffff" fill-opacity="0.5"/>
       </g>
-      <circle cx="50" cy="50" r="8" fill="currentColor"/>
+      <circle cx="50" cy="50" r="8" fill="#ffffff"/>
     </svg>`
   },
   flower: {
     id: 'flower',
-    title: 'Flower',
+    title: 'Future Pulse',
     cssClass: 'bg-slate-900/80 hover:bg-slate-800',
-    borderClass: 'border-slate-800',
-    color: '#818cf8',
-    glowColor: 'rgba(129, 140, 248, 0.4)',
+    borderClass: 'border-purple-500/40',
+    color: '#c084fc',
+    glowColor: 'rgba(192, 132, 252, 0.6)',
     hotkey: '2',
-    badgeBg: 'bg-slate-800',
-    badgeText: 'text-slate-300',
-    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-indigo-400">
+    badgeBg: 'bg-purple-950',
+    badgeText: 'text-purple-300',
+    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-purple-400 futuristic-glow">
       <g stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none">
         <line x1="50" y1="16" x2="50" y2="84"/>
         <line x1="21" y1="33" x2="79" y2="67"/>
@@ -71,35 +65,35 @@ export const CRYSTAL_DEFINITIONS: Record<ShapeType, EnhancedCrystalDef> = {
       <circle cx="79" cy="67" r="6" fill="currentColor"/>
       <circle cx="21" cy="67" r="6" fill="currentColor"/>
       <circle cx="79" cy="33" r="6" fill="currentColor"/>
-      <circle cx="50" cy="50" r="9" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="50" cy="50" r="14" fill="#a855f7" fill-opacity="0.3" stroke="currentColor" stroke-width="3"/>
     </svg>`,
     svg: '',
-    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-indigo-300">
-      <g stroke="currentColor" stroke-width="3.5" stroke-linecap="round" fill="none">
+    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-white">
+      <g stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" fill="none">
         <line x1="50" y1="14" x2="50" y2="86"/>
         <line x1="19" y1="32" x2="81" y2="68"/>
         <line x1="19" y1="68" x2="81" y2="32"/>
       </g>
-      <circle cx="50" cy="14" r="6" fill="currentColor"/>
-      <circle cx="50" cy="86" r="6" fill="currentColor"/>
-      <circle cx="19" cy="32" r="6" fill="currentColor"/>
-      <circle cx="81" cy="68" r="6" fill="currentColor"/>
-      <circle cx="19" cy="68" r="6" fill="currentColor"/>
-      <circle cx="81" cy="32" r="6" fill="currentColor"/>
-      <circle cx="50" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="3"/>
+      <circle cx="50" cy="14" r="6" fill="#ffffff"/>
+      <circle cx="50" cy="86" r="6" fill="#ffffff"/>
+      <circle cx="19" cy="32" r="6" fill="#ffffff"/>
+      <circle cx="81" cy="68" r="6" fill="#ffffff"/>
+      <circle cx="19" cy="68" r="6" fill="#ffffff"/>
+      <circle cx="81" cy="32" r="6" fill="#ffffff"/>
+      <circle cx="50" cy="50" r="15" fill="#ffffff" fill-opacity="0.4" stroke="#ffffff" stroke-width="3"/>
     </svg>`
   },
   needle: {
     id: 'needle',
-    title: 'Needle',
+    title: 'Future Prism',
     cssClass: 'bg-slate-900/80 hover:bg-slate-800',
-    borderClass: 'border-slate-800',
+    borderClass: 'border-emerald-500/40',
     color: '#34d399',
-    glowColor: 'rgba(52, 211, 153, 0.4)',
+    glowColor: 'rgba(52, 211, 153, 0.6)',
     hotkey: '3',
-    badgeBg: 'bg-slate-800',
-    badgeText: 'text-slate-300',
-    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-emerald-400">
+    badgeBg: 'bg-emerald-950',
+    badgeText: 'text-emerald-300',
+    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-emerald-400 futuristic-glow">
       <g stroke="currentColor" stroke-width="4.5" stroke-linecap="round" fill="none">
         <line x1="50" y1="10" x2="50" y2="90"/>
         <line x1="18" y1="50" x2="82" y2="50"/>
@@ -107,24 +101,20 @@ export const CRYSTAL_DEFINITIONS: Record<ShapeType, EnhancedCrystalDef> = {
         <polyline points="41,78 50,88 59,78"/>
         <polyline points="28,41 18,50 28,59"/>
         <polyline points="72,41 82,50 72,59"/>
-        <polyline points="43,38 50,30 57,38"/>
-        <polyline points="43,62 50,70 57,62"/>
       </g>
-      <polygon points="50,42 58,50 50,58 42,50" fill="currentColor"/>
+      <polygon points="50,34 66,50 50,66 34,50" fill="#059669" fill-opacity="0.5" stroke="currentColor" stroke-width="2"/>
     </svg>`,
     svg: '',
-    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-emerald-300">
-      <g stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none">
+    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-white">
+      <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" fill="none">
         <line x1="50" y1="10" x2="50" y2="90"/>
         <line x1="18" y1="50" x2="82" y2="50"/>
         <polyline points="41,22 50,12 59,22"/>
         <polyline points="41,78 50,88 59,78"/>
         <polyline points="28,41 18,50 28,59"/>
         <polyline points="72,41 82,50 72,59"/>
-        <polyline points="43,38 50,30 57,38"/>
-        <polyline points="43,62 50,70 57,62"/>
       </g>
-      <polygon points="50,42 58,50 50,58 42,50" fill="currentColor"/>
+      <polygon points="50,34 66,50 50,66 34,50" fill="#ffffff" fill-opacity="0.5" stroke="#ffffff" stroke-width="2"/>
     </svg>`
   }
 };
@@ -144,4 +134,4 @@ export function shuffleSlots(currentOrder: ShapeType[]): ShapeType[] {
     attempts++;
   } while (shuffled.every((val, idx) => val === currentOrder[idx]) && attempts < 10);
   return shuffled;
-}
+}

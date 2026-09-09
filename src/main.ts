@@ -100,8 +100,8 @@ function init(): void {
       audioManager.playMatch(combo, inDangerZone);
       if (ui) {
         ui.showArenaToast(
-          inDangerZone ? `PERFECT! +${pts}` : `MATCH +${pts}`,
-          inDangerZone ? '#38bdf8' : '#94a3b8'
+          inDangerZone ? `⚡ FUTURE PERFECT! +${pts}` : `FUTURE SYNC +${pts}`,
+          inDangerZone ? '#38bdf8' : '#c084fc'
         );
       }
       if (particleEngine) {
@@ -109,12 +109,12 @@ function init(): void {
         if (arenaBox) {
           const rect = arenaBox.getBoundingClientRect();
           const targetY = inDangerZone ? rect.top + rect.height * 0.78 : rect.top + rect.height * 0.45;
-          particleEngine.triggerBurst(rect.left + rect.width * 0.5, targetY, inDangerZone ? '#38bdf8' : '#0284c7', 20);
+          particleEngine.triggerBurst(rect.left + rect.width * 0.5, targetY, '#ffffff', 25);
         }
       }
     },
     onMatchMiss: () => {
-      if (ui) ui.showArenaToast('MISS', '#f87171');
+      if (ui) ui.showArenaToast('FUTURE MISS', '#f87171');
     },
     onGameOver: (finalScore, isNewHighScore) => {
       if (ui) {
