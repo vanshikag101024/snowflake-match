@@ -35,7 +35,7 @@ g.toggleSFX = () => {
   const enabled = audioManager.toggle();
   if (ui) {
     ui.updateAudioButtons(enabled);
-    ui.showNotification(enabled ? 'Audio ON 🔊' : 'Audio OFF 🔇');
+    ui.showNotification(enabled ? 'Audio Enabled' : 'Audio Muted');
   }
 };
 
@@ -57,13 +57,13 @@ g.addCurrency = (type: 'crystals' | 'gems', amt: number) => {
     const el = document.getElementById('snow-crystals-count');
     if (el) el.innerText = crystalCount.toLocaleString();
     audioManager.playReward('crystal');
-    if (ui) ui.showNotification(`+${amt} Snow Crystals harvested! ❄️`);
+    if (ui) ui.showNotification(`+${amt} Crystals claimed`);
   } else {
     gemCount += amt;
     const el = document.getElementById('magic-gems-count');
     if (el) el.innerText = gemCount.toLocaleString();
     audioManager.playReward('gem');
-    if (ui) ui.showNotification(`+${amt} Magic Gems received! 💎`);
+    if (ui) ui.showNotification(`+${amt} Gems claimed`);
   }
 };
 
@@ -100,8 +100,8 @@ function init(): void {
       audioManager.playMatch(combo, inDangerZone);
       if (ui) {
         ui.showArenaToast(
-        inDangerZone ? 'DANGER ZONE HIT! ✨' : `MATCH! +${pts}`,
-          inDangerZone ? '#fca5a5' : '#93c5fd'
+          inDangerZone ? `PERFECT! +${pts}` : `MATCH +${pts}`,
+          inDangerZone ? '#38bdf8' : '#94a3b8'
         );
       }
       if (particleEngine) {
@@ -109,12 +109,12 @@ function init(): void {
         if (arenaBox) {
           const rect = arenaBox.getBoundingClientRect();
           const targetY = inDangerZone ? rect.top + rect.height * 0.78 : rect.top + rect.height * 0.45;
-          particleEngine.triggerBurst(rect.left + rect.width * 0.5, targetY, inDangerZone ? '#f87171' : '#38bdf8', 28);
+          particleEngine.triggerBurst(rect.left + rect.width * 0.5, targetY, inDangerZone ? '#38bdf8' : '#0284c7', 20);
         }
       }
     },
     onMatchMiss: () => {
-      if (ui) ui.showArenaToast('MISS! 💥', '#f87171');
+      if (ui) ui.showArenaToast('MISS', '#f87171');
     },
     onGameOver: (finalScore, isNewHighScore) => {
       if (ui) {

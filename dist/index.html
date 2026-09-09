@@ -3,273 +3,240 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Remix Snowflake Match</title>
-  <meta name="description" content="Match falling snowflakes with their corresponding crystal gems in this enchanting winter wonderland game." />
-  <meta property="og:title" content="Remix Snowflake Match" />
-  <meta property="og:description" content="Match falling snowflakes with their corresponding crystal gems in this enchanting winter wonderland game." />
+  <title>Snowflake Match</title>
+  <meta name="description" content="A minimal rhythm and pattern matching game." />
+  <meta property="og:title" content="Snowflake Match" />
+  <meta property="og:description" content="A minimal rhythm and pattern matching game." />
   
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800;900&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            fredoka: ['"Fredoka"', 'sans-serif'],
-            quicksand: ['"Quicksand"', 'sans-serif'],
-          },
-          colors: {
-            frost: {
-              100: '#E0F7FA',
-              200: '#B2EBF2',
-              300: '#80DEEA',
-              400: '#4DD0E1',
-              500: '#00BCD4',
-              600: '#00ACC1',
-              800: '#006064',
-            },
-            candypink: '#FF5E97',
-            candyamber: '#FFB800',
-            magicsky: '#1D1E4E'
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
           }
         }
       }
     }
   </script>
-  <script type="module" crossorigin src="/assets/index-Dbxg1tAh.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CfeuECmw.css">
+  <script type="module" crossorigin src="/assets/index-BaA-o6ze.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-UU_lD6Qs.css">
 </head>
-<body class="fixed inset-0 h-screen w-screen overflow-hidden flex flex-col justify-between text-slate-800 antialiased selection:bg-cyan-300 selection:text-blue-950 bg-slate-950 select-none">
+<body class="fixed inset-0 h-screen w-screen overflow-hidden flex flex-col justify-between text-slate-100 antialiased bg-slate-950 select-none font-sans">
   
-  <div class="fixed inset-0 z-0 bg-center bg-cover bg-no-repeat transition-all duration-700 pointer-events-none" data-purpose="game-background" style="background-image: url('/assets/snow-background-BMDJcIrA.png');">
-    <div class="absolute inset-0 bg-gradient-to-b from-indigo-950/40 via-transparent to-blue-950/70"></div>
-  </div>
+  <!-- Subtle ambient background glow -->
+  <div class="fixed inset-0 z-0 pointer-events-none bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-950/40 via-slate-950 to-slate-950"></div>
 
-  <canvas class="fixed inset-0 z-10 pointer-events-none" data-purpose="snow-particles" id="snowfall-canvas"></canvas>
+  <!-- Ambient snowfall canvas -->
+  <canvas class="fixed inset-0 z-10 pointer-events-none opacity-60" id="snowfall-canvas"></canvas>
 
-  <div class="relative z-20 flex flex-col items-center justify-center h-full w-full max-w-4xl mx-auto px-4 py-4 text-center overflow-hidden transition-opacity duration-300" id="home-view">
+  <!-- HOME VIEW -->
+  <div class="relative z-20 flex flex-col items-center justify-center h-full w-full max-w-xl mx-auto px-4 py-6 text-center transition-opacity duration-300" id="home-view">
     
-    <div class="absolute top-3 right-3 sm:top-5 sm:right-5 z-30 flex items-center gap-2">
-      <button id="home-sfx-btn" onclick="toggleSFX()" class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-white/25 hover:bg-white/35 active:scale-95 backdrop-blur-md border-2 border-white/60 text-white font-fredoka font-bold text-lg sm:text-xl flex items-center justify-center shadow-lg drop-shadow cursor-pointer transition" title="Toggle Sound">
-        🔊
+    <div class="absolute top-4 right-4 z-30">
+      <button id="home-sfx-btn" onclick="toggleSFX()" class="w-10 h-10 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition cursor-pointer" title="Toggle Sound">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
       </button>
     </div>
 
-    <main class="flex flex-col items-center justify-center text-center py-2 w-full" data-purpose="hero-title-section">
-      <div class="relative flex flex-col items-center max-w-2xl px-2">
+    <main class="flex flex-col items-center justify-center text-center w-full my-auto" data-purpose="hero-title-section">
+      <div class="flex flex-col items-center w-full">
         
-           <div class="relative -mb-2 z-10 animate-float">
-          <div class="w-14 h-14 sm:w-18 sm:h-18 rounded-2xl bg-gradient-to-b from-white/95 via-cyan-100/85 to-sky-300/85 p-2 shadow-2xl border-2 border-white flex items-center justify-center animate-glow backdrop-blur-md">
-            <svg viewBox="0 0 100 100" class="w-9 h-9 sm:w-11 sm:h-11 animate-spin-slow drop-shadow">
-              <g stroke="#0284c7" stroke-width="6" stroke-linecap="round">
-                <line x1="50" y1="10" x2="50" y2="90"/>
-                <line x1="15" y1="30" x2="85" y2="70"/>
-                <line x1="15" y1="70" x2="85" y2="30"/>
-              </g>
-              <g stroke="#38bdf8" stroke-width="3" stroke-linecap="round">
-                <line x1="50" y1="28" x2="42" y2="18"/>
-                <line x1="50" y1="28" x2="58" y2="18"/>
-                <line x1="50" y1="72" x2="42" y2="82"/>
-                <line x1="50" y1="72" x2="58" y2="82"/>
-              </g>
-              <circle cx="50" cy="50" r="11" fill="#ffffff" stroke="#0284c7" stroke-width="3" />
-              <circle cx="50" cy="50" r="5.5" fill="#38bdf8" />
-            </svg>
-          </div>
-          <span class="absolute -top-2 -right-3 text-amber-300 text-xl animate-ping select-none">✨</span>
-          <span class="absolute -bottom-1 -left-2 text-yellow-300 text-base select-none">⭐</span>
+        <!-- Clean minimal logo icon -->
+        <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 p-3.5 mb-6 flex items-center justify-center shadow-sm">
+          <svg viewBox="0 0 100 100" class="w-full h-full text-sky-400 stroke-current" fill="none" stroke-width="4.5" stroke-linecap="round">
+            <line x1="50" y1="10" x2="50" y2="90"/>
+            <line x1="15" y1="30" x2="85" y2="70"/>
+            <line x1="15" y1="70" x2="85" y2="30"/>
+            <circle cx="50" cy="50" r="10" stroke-width="3" fill="#0f172a"/>
+          </svg>
         </div>
 
-        <div class="relative select-none">
-          <h1 class="font-fredoka text-5xl sm:text-7xl font-black uppercase text-white tracking-wider title-pop drop-shadow-2xl">
-            Snowflake
-          </h1>
-          <h2 class="font-fredoka text-4xl sm:text-6xl font-extrabold uppercase text-amber-300 tracking-wider gold-pop -mt-2 drop-shadow-xl">
-            Match
-          </h2>
-        </div>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+          Snowflake Match
+        </h1>
+        <p class="mt-2 text-sm text-slate-400 font-medium tracking-wide">
+          Rhythm &amp; Pattern Matching
+        </p>
 
-        <div class="mt-2.5 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/65 backdrop-blur-md border border-cyan-300/40 text-cyan-100 text-xs sm:text-sm font-semibold tracking-wide shadow-lg">
-          <span class="text-cyan-300">✨</span>
-          <span>A Magical Winter Rhythm &amp; Matching Adventure</span>
-        </div>
-
-        <div class="mt-6 sm:mt-8 relative">
-          <div class="absolute -inset-1.5 bg-gradient-to-r from-teal-400 via-sky-400 to-indigo-400 rounded-full blur-lg opacity-80 animate-pulse"></div>
-          <button class="game-button relative overflow-hidden inline-flex items-center justify-center gap-3 px-10 sm:px-14 py-3 sm:py-4 rounded-full bg-gradient-to-b from-cyan-300 via-sky-500 to-blue-600 text-white font-fredoka font-extrabold text-xl sm:text-2xl border-4 border-white shadow-[0_10px_25px_rgba(2,132,199,0.7)] active:shadow-none glossy-bar cursor-pointer" onclick="switchToGame()">
-            <span>PLAY NOW</span>
-            <span class="text-xl sm:text-2xl animate-bounce">❄️</span>
+        <!-- CTA Buttons -->
+        <div class="mt-8 w-full max-w-xs space-y-3">
+          <button class="w-full py-3.5 px-6 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-base tracking-wide transition-all shadow-lg shadow-sky-500/10 active:scale-[0.99] cursor-pointer" onclick="switchToGame()">
+            Play Game
           </button>
-        </div>
 
-        <div class="mt-6 flex flex-col items-center gap-3">
-          <div class="flex items-center justify-center gap-3 flex-wrap">
-            <button class="game-button px-5 py-2 sm:px-6 sm:py-2.5 rounded-2xl bg-white/25 hover:bg-white/35 backdrop-blur-md border-2 border-white/60 text-white font-fredoka font-bold text-sm sm:text-base flex items-center gap-2 shadow-lg drop-shadow cursor-pointer" onclick="openHowToPlayModal()">
-              <span>📖</span>
-              <span>How to Play</span>
+          <div class="grid grid-cols-2 gap-2.5">
+            <button class="py-2.5 px-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-sm font-semibold transition cursor-pointer" onclick="openHowToPlayModal()">
+              How to Play
             </button>
-            <button class="game-button px-5 py-2 sm:px-6 sm:py-2.5 rounded-2xl bg-white/25 hover:bg-white/35 backdrop-blur-md border-2 border-white/60 text-white font-fredoka font-bold text-sm sm:text-base flex items-center gap-2 shadow-lg drop-shadow cursor-pointer" onclick="openDailyGiftsModal()">
-              <span>🎁</span>
-            <span>Daily Gifts</span>
+            <button class="py-2.5 px-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white text-sm font-semibold transition cursor-pointer" onclick="openDailyGiftsModal()">
+              Daily Reward
             </button>
           </div>
-
-          <div class="mt-2 inline-flex items-center gap-2 px-5 py-2 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-amber-400/40 text-amber-200 text-sm sm:text-base font-bold shadow-lg">
-            <span>🏆 Best Record:</span>
-            <span class="text-yellow-300 font-extrabold text-lg" id="home-best-score">14,820</span>
         </div>
+
+        <!-- Best score indicator -->
+        <div class="mt-8 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/60 border border-slate-800 text-xs font-medium text-slate-400">
+          <span>Best Score:</span>
+          <span class="text-sky-400 font-bold" id="home-best-score">14,820</span>
         </div>
 
       </div>
     </main>
   </div>
 
-  <div class="hidden relative z-20 flex-col justify-between h-full w-full max-w-4xl mx-auto px-3 py-2 sm:px-5 sm:py-3 overflow-hidden select-none transition-opacity duration-300" id="game-view">
+  <!-- GAME VIEW -->
+  <div class="hidden relative z-20 flex-col justify-between h-full w-full max-w-2xl mx-auto px-4 py-4 overflow-hidden transition-opacity duration-300" id="game-view">
     
-    <header class="flex-shrink-0 w-full flex items-center justify-between gap-2.5 sm:gap-4 bg-white/20 backdrop-blur-md border border-white/50 rounded-2xl sm:rounded-3xl px-3 sm:px-5 py-2 shadow-lg">
-      <div class="flex items-center gap-2 sm:gap-3">
-        <button class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-white/25 hover:bg-white/40 border-2 border-white/60 text-white font-bold flex items-center justify-center text-base sm:text-lg shadow transition active:scale-95 cursor-pointer" onclick="switchToHome()" title="Return to Home Screen">
-          ⬅
+    <!-- Game Header HUD -->
+    <header class="flex-shrink-0 w-full flex items-center justify-between bg-slate-900/70 border border-slate-800/80 rounded-2xl px-4 py-2.5 shadow-sm backdrop-blur-md">
+      <div class="flex items-center gap-3">
+        <button class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition cursor-pointer" onclick="switchToHome()" title="Return to Menu">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <div class="flex flex-col">
-          <span class="text-xs sm:text-sm font-fredoka font-black text-white tracking-wide drop-shadow">REMIX ARENA</span>
-          <span class="text-[10px] sm:text-xs font-semibold text-cyan-200" id="game-level-display">Lv. 1</span>
-        </div>
+        <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest" id="game-level-display">Level 1</span>
       </div>
 
-      <div class="flex items-center gap-2 sm:gap-3 font-fredoka">
-        <div class="bg-slate-900/60 border border-cyan-300/40 px-3 sm:px-4 py-1 rounded-xl sm:rounded-2xl text-center shadow-inner">
-          <div class="text-[9px] text-cyan-200 uppercase tracking-widest font-bold">Score</div>
-          <div class="text-lg sm:text-2xl font-black text-yellow-300 leading-tight" id="game-score-display">0</div>
+      <div class="flex items-center gap-6">
+        <div class="text-center">
+          <span class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold block">Score</span>
+          <span class="text-lg font-extrabold text-white leading-none" id="game-score-display">0</span>
         </div>
 
-        <div class="flex items-center gap-0.5 sm:gap-1 text-sm sm:text-lg px-2 sm:px-2.5 py-1 bg-white/10 rounded-xl sm:rounded-2xl border border-white/20" id="game-lives-display">
-          <span>💖</span><span>💖</span><span>💖</span>
+        <div class="flex items-center gap-1" id="game-lives-display">
+          <!-- Populated by JS -->
         </div>
 
-        <button class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl sm:rounded-2xl bg-white/25 hover:bg-white/40 border border-white/50 text-white flex items-center justify-center text-sm sm:text-base shadow transition cursor-pointer" id="game-sfx-btn" onclick="toggleSFX()" title="Toggle Sound">
-          🔊
+        <button class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition cursor-pointer" id="game-sfx-btn" onclick="toggleSFX()" title="Toggle Sound">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
         </button>
       </div>
     </header>
 
-    <main class="relative flex-1 w-full overflow-hidden my-1 pointer-events-none" id="arena-box">
+    <!-- Falling Arena Box -->
+    <main class="relative flex-1 w-full overflow-hidden my-2 pointer-events-none" id="arena-box">
       <div id="falling-snowflake"></div>
       <div class="catch-zone-line" id="catch-zone-line"></div>
-      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 z-40 hidden px-6 py-2 rounded-2xl font-fredoka font-black text-base sm:text-lg text-slate-950 shadow-2xl border-2 border-white animate-bounce" id="arena-toast">
-        MATCH!
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 z-40 hidden px-4 py-1.5 rounded-full font-semibold text-xs text-sky-400 bg-slate-900/90 border border-sky-500/30 backdrop-blur-md shadow-lg" id="arena-toast">
+        MATCH
       </div>
     </main>
 
-    <footer class="flex-shrink-0 w-full flex flex-col items-center gap-1.5 pb-2">
-      <div class="text-[11px] sm:text-xs font-fredoka font-bold text-white drop-shadow flex items-center gap-1.5">
-        <span>⚡ Buttons swipe slots after each hit! Press keys</span>
-        <span class="px-1.5 py-0.5 bg-black/40 rounded border border-white/40 text-cyan-200">1</span>
-        <span class="px-1.5 py-0.5 bg-black/40 rounded border border-white/40 text-cyan-200">2</span>
-        <span class="px-1.5 py-0.5 bg-black/40 rounded border border-white/40 text-cyan-200">3</span>
-        <span>or tap below:</span>
+    <!-- Bottom Controls Footer -->
+    <footer class="flex-shrink-0 w-full flex flex-col items-center gap-2 pb-1">
+      <div class="text-[11px] font-medium text-slate-500 tracking-wide flex items-center gap-1.5">
+        <span>Tap crystal or press</span>
+        <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300 font-mono text-[10px]">1</kbd>
+        <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300 font-mono text-[10px]">2</kbd>
+        <kbd class="px-1.5 py-0.5 bg-slate-800 rounded text-slate-300 font-mono text-[10px]">3</kbd>
       </div>
       
-      <div class="grid grid-cols-3 gap-2.5 sm:gap-4 w-full max-w-xl" id="buttons-grid">
+      <div class="grid grid-cols-3 gap-3 w-full" id="buttons-grid">
       </div>
     </footer>
   </div>
 
-  <div class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-how-to-play">
-    <div class="relative w-full max-w-lg bg-gradient-to-b from-sky-900 to-indigo-950 border-2 border-cyan-300 rounded-3xl p-6 shadow-2xl text-white">
-      <button class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 border border-white/50 text-white font-bold text-lg flex items-center justify-center transition cursor-pointer" onclick="closeModal('modal-how-to-play')">✕</button>
-      <h3 class="font-fredoka text-2xl sm:text-3xl font-black text-cyan-300 mb-4 flex items-center gap-2">
-        <span>📖</span>
-        <span>How to Play</span>
+  <!-- MODAL: HOW TO PLAY -->
+  <div class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4" id="modal-how-to-play">
+    <div class="relative w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 text-slate-100 shadow-2xl">
+      <button class="absolute top-4 right-4 text-slate-400 hover:text-white transition cursor-pointer p-1" onclick="closeModal('modal-how-to-play')">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <h3 class="text-xl font-bold text-white mb-4">
+        How to Play
       </h3>
-      <div class="space-y-3.5 text-sm sm:text-base font-medium text-slate-100">
-        <div class="flex items-start gap-3 bg-white/10 p-3 rounded-2xl border border-white/20">
-          <span class="text-2xl">❄️</span>
+      <div class="space-y-4 text-sm text-slate-300">
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
           <div>
-            <strong class="text-cyan-200 block text-base font-bold">1. Watch the Snowflake Fall</strong>
-            A random crystal snowflake (Star, Flower, or Needle) glides down from above.
+            <strong class="text-white block font-semibold">Watch the falling snowflake</strong>
+            A crystal snowflake pattern glides downwards.
           </div>
         </div>
-        <div class="flex items-start gap-3 bg-white/10 p-3 rounded-2xl border border-white/20">
-          <span class="text-2xl">💎</span>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
           <div>
-            <strong class="text-pink-300 block text-base font-bold">2. Tap the Matching Crystal</strong>
-            Tap the matching crystal or press keys 1, 2, or 3 before it passes the danger line!
+            <strong class="text-white block font-semibold">Match the pattern</strong>
+            Tap the matching key (1, 2, or 3) before it crosses the target line.
           </div>
         </div>
-        <div class="flex items-start gap-3 bg-white/10 p-3 rounded-2xl border border-white/20">
-          <span class="text-2xl">⚡</span>
+        <div class="flex items-start gap-3">
+          <div class="w-7 h-7 rounded-lg bg-sky-500/10 text-sky-400 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
           <div>
-            <strong class="text-yellow-300 block text-base font-bold">3. Danger Zone Bonus &amp; Shuffling Slots</strong>
-            Catching the snowflake right above the red danger line awards 250 PTS! The buttons swap positions after each hit.
+            <strong class="text-white block font-semibold">Perfect timing bonus</strong>
+            Catching snowflakes right at the target line grants bonus points. Button positions shuffle after hits.
           </div>
         </div>
       </div>
-      <button class="w-full mt-5 py-3 rounded-2xl bg-gradient-to-r from-teal-400 to-sky-500 hover:from-teal-300 hover:to-sky-400 text-white font-fredoka font-black text-lg shadow-lg cursor-pointer transition" onclick="closeModal('modal-how-to-play')">
-        Got it, Let's Play!
+      <button class="w-full mt-6 py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm cursor-pointer transition" onclick="closeModal('modal-how-to-play')">
+        Understood
       </button>
     </div>
   </div>
 
-  <div class="fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-daily-gifts">
-    <div class="relative w-full max-w-md bg-gradient-to-b from-sky-900 to-indigo-950 border-2 border-amber-300 rounded-3xl p-6 shadow-2xl text-white text-center">
-      <button class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 border border-white/50 text-white font-bold text-lg flex items-center justify-center transition cursor-pointer" onclick="closeModal('modal-daily-gifts')">✕</button>
-      <div class="text-4xl mb-1">🎁</div>
-      <h3 class="font-fredoka text-2xl font-black text-amber-300 mb-1">Daily Winter Gift</h3>
-      <p class="text-xs text-slate-200 mb-4">Claim your free winter supplies every 24 hours!</p>
+  <!-- MODAL: DAILY GIFTS -->
+  <div class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4" id="modal-daily-gifts">
+    <div class="relative w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-6 text-slate-100 shadow-2xl text-center">
+      <button class="absolute top-4 right-4 text-slate-400 hover:text-white transition cursor-pointer p-1" onclick="closeModal('modal-daily-gifts')">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <h3 class="text-xl font-bold text-white mb-1">Daily Reward</h3>
+      <p class="text-xs text-slate-400 mb-6">Claim your daily supplies</p>
       
-      <div class="grid grid-cols-2 gap-3 mb-4">
-        <div class="bg-white/10 rounded-2xl p-3 border border-white/20 flex flex-col items-center">
-          <span class="text-2xl">❄️</span>
-          <span class="text-sm font-bold text-cyan-200 mt-1">+250 Crystals</span>
-        <button class="mt-2 w-full py-1.5 bg-cyan-500 hover:bg-cyan-400 rounded-xl text-xs font-black shadow cursor-pointer transition" onclick="addCurrency('crystals', 250)">Claim</button>
+      <div class="grid grid-cols-2 gap-3 mb-6">
+        <div class="bg-slate-950/50 rounded-xl p-4 border border-slate-800 flex flex-col items-center">
+          <span class="text-xs font-semibold text-slate-400">Crystals</span>
+          <span class="text-base font-bold text-sky-400 mt-1">+250</span>
+          <button class="mt-3 w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold cursor-pointer transition" onclick="addCurrency('crystals', 250)">Claim</button>
         </div>
-        <div class="bg-white/10 rounded-2xl p-3 border border-white/20 flex flex-col items-center">
-          <span class="text-2xl">💎</span>
-          <span class="text-sm font-bold text-amber-200 mt-1">+15 Gems</span>
-          <button class="mt-2 w-full py-1.5 bg-amber-500 hover:bg-amber-400 rounded-xl text-xs font-black shadow cursor-pointer transition" onclick="addCurrency('gems', 15)">Claim</button>
+        <div class="bg-slate-950/50 rounded-xl p-4 border border-slate-800 flex flex-col items-center">
+          <span class="text-xs font-semibold text-slate-400">Gems</span>
+          <span class="text-base font-bold text-indigo-400 mt-1">+15</span>
+          <button class="mt-3 w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold cursor-pointer transition" onclick="addCurrency('gems', 15)">Claim</button>
         </div>
       </div>
 
-      <button class="w-full py-2.5 rounded-2xl bg-white/20 hover:bg-white/30 border border-white/40 text-white font-fredoka font-bold text-sm cursor-pointer transition" onclick="closeModal('modal-daily-gifts')">
+      <button class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs cursor-pointer transition" onclick="closeModal('modal-daily-gifts')">
         Close
       </button>
     </div>
   </div>
 
-  <div class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4" id="game-over-modal">
-    <div class="relative w-full max-w-sm bg-gradient-to-b from-sky-900 to-indigo-950 border-2 border-cyan-300 rounded-3xl p-6 shadow-2xl text-white text-center">
-      <div class="text-5xl mb-2">❄️</div>
-      <h3 class="font-fredoka text-3xl font-black text-white mb-1">Game Over!</h3>
-      <p class="text-sm text-cyan-200 mb-3">All lives depleted</p>
+  <!-- MODAL: GAME OVER -->
+  <div class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4" id="game-over-modal">
+    <div class="relative w-full max-w-sm bg-slate-900 border border-slate-800 rounded-2xl p-6 text-slate-100 shadow-2xl text-center">
+      <h3 class="text-2xl font-bold text-white mb-1">Game Over</h3>
+      <p class="text-xs text-slate-400 mb-5">No lives remaining</p>
 
-      <div class="bg-slate-950/60 rounded-2xl p-4 border border-cyan-300/40 mb-4">
-        <div class="text-xs text-slate-300 uppercase tracking-wider font-bold">Final Score</div>
-        <div class="text-3xl font-black text-yellow-300 mt-1" id="game-over-score">0</div>
-        <div class="text-xs text-amber-300 font-bold mt-1 hidden" id="game-over-high-notice">🎉 New Personal Best!</div>
-    </div>
+      <div class="bg-slate-950/60 rounded-xl p-4 border border-slate-800 mb-6">
+        <div class="text-[10px] text-slate-500 uppercase tracking-widest font-semibold">Final Score</div>
+        <div class="text-3xl font-black text-sky-400 mt-1" id="game-over-score">0</div>
+        <div class="text-xs text-emerald-400 font-semibold mt-2 hidden" id="game-over-high-notice">New High Score</div>
+      </div>
 
       <div class="flex flex-col gap-2.5">
-        <button id="btn-retry-game" class="w-full py-3 rounded-2xl bg-gradient-to-r from-teal-400 to-sky-500 hover:from-teal-300 hover:to-sky-400 text-white font-fredoka font-black text-lg shadow-lg cursor-pointer transition">
-          Play Again 🔄
+        <button id="btn-retry-game" class="w-full py-3 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm cursor-pointer transition">
+          Play Again
         </button>
-        <button id="btn-menu-game" class="w-full py-2.5 rounded-2xl bg-white/20 hover:bg-white/30 border border-white/40 text-white font-fredoka font-bold text-sm cursor-pointer transition">
-          Return to Menu 🏠
+        <button id="btn-menu-game" class="w-full py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs cursor-pointer transition">
+          Main Menu
         </button>
       </div>
     </div>
   </div>
 
-  <div class="fixed top-20 left-1/2 -translate-x-1/2 z-50 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toast-banner">
-    <div class="bg-cyan-500/90 text-white font-fredoka font-bold text-sm sm:text-base px-6 py-2.5 rounded-2xl shadow-2xl border-2 border-white backdrop-blur-md flex items-center gap-2">
-      <span id="toast-icon">✨</span>
+  <!-- TOAST BANNER -->
+  <div class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toast-banner">
+    <div class="bg-slate-900/90 text-slate-200 font-medium text-xs px-4 py-2 rounded-xl border border-slate-800 shadow-xl backdrop-blur-md flex items-center gap-2">
       <span id="toast-message">Notification</span>
     </div>
   </div>
 
 </body>
-</html>
+</html>

@@ -57,7 +57,7 @@ private dangerLine: HTMLElement | null;
       this.scoreEl.innerText = score.toLocaleString();
     }
     if (this.levelEl) {
-      this.levelEl.innerText = `Lv. ${level}${combo > 1 ? ` (${combo}x)` : ''}`;
+      this.levelEl.innerText = `LEVEL ${level}${combo > 1 ? ` (${combo}x)` : ''}`;
     }
   }
 
@@ -65,7 +65,8 @@ private dangerLine: HTMLElement | null;
     if (!this.livesEl) return;
     let html = '';
     for (let i = 0; i < 3; i++) {
-      html += i < lives ? '<span>💖</span>' : '<span class="opacity-30 filter grayscale">🖤</span>';
+      const active = i < lives;
+      html += `<div class="w-3 h-3 rounded-full ${active ? 'bg-sky-400 shadow-sm shadow-sky-400/50' : 'bg-slate-800'} transition-all"></div>`;
     }
     this.livesEl.innerHTML = html;
   }
@@ -81,7 +82,6 @@ private dangerLine: HTMLElement | null;
     this.flakeContainer.style.left = `${flake.x}%`;
     this.flakeContainer.style.transform = `translate(-50%, -50%) rotate(${flake.rotation}deg)`;
     this.flakeContainer.style.display = 'block';
-  
   }
 
   public clearSnowflake(): void {
@@ -99,10 +99,9 @@ private dangerLine: HTMLElement | null;
     }
   }
 
-  public showArenaToast(text: string, color: string = '#93c5fd'): void {
+  public showArenaToast(text: string, _color: string = '#93c5fd'): void {
     if (!this.toastEl) return;
     this.toastEl.innerText = text;
-    this.toastEl.style.backgroundColor = color;
     this.toastEl.classList.remove('hidden');
 
     if (this.toastTimer) {
@@ -110,7 +109,7 @@ private dangerLine: HTMLElement | null;
     }
     this.toastTimer = window.setTimeout(() => {
       if (this.toastEl) this.toastEl.classList.add('hidden');
-    }, 600);
+    }, 500);
   }
 
   public renderButtons(order: ShapeType[], onMatchClick: (type: ShapeType) => void): void {
@@ -123,17 +122,17 @@ private dangerLine: HTMLElement | null;
       const slotNum = idx + 1;
 
       const btn = document.createElement('button');
-      btn.className = `gem-btn-card relative group flex flex-row items-center justify-center gap-2 sm:gap-3.5 px-3 sm:px-5 py-2.5 sm:py-3.5 rounded-2xl sm:rounded-3xl bg-gradient-to-r ${def.cssClass} border-2 sm:border-3 ${def.borderClass} text-white font-fredoka shadow-xl active:scale-95 cursor-pointer select-none transition-all duration-150`;
+      btn.className = `gem-btn-card relative flex flex-col items-center justify-center gap-1.5 p-3 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-200 cursor-pointer select-none transition-all`;
       btn.setAttribute('data-shape', shapeKey);
 
       btn.innerHTML = `
-        <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-2.5 sm:px-3 py-0.5 rounded-full ${def.badgeBg} ${def.badgeText} border-2 border-white font-fredoka font-black text-[10px] sm:text-xs shadow tracking-wide whitespace-nowrap">
-          KEY [${slotNum}]
+        <span class="text-[10px] font-mono text-slate-500 font-semibold uppercase tracking-wider">
+          Key ${slotNum}
         </span>
-        <div class="w-8 h-8 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center filter drop-shadow group-hover:scale-110 transition-transform">
+        <div class="w-8 h-8 flex items-center justify-center my-0.5">
           ${def.gemSvg}
         </div>
-        <span class="text-sm sm:text-lg font-black tracking-wide drop-shadow whitespace-nowrap font-fredoka text-white">
+        <span class="text-xs font-semibold tracking-wide text-slate-300">
           ${def.title}
         </span>
       `;
@@ -148,14 +147,16 @@ private dangerLine: HTMLElement | null;
   }
 
   public updateAudioButtons(enabled: boolean): void {
-    const icon = enabled ? '🔊' : '🔇';
+    const iconSvg = enabled 
+      ? `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>`
+      : `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>`;
     const title = enabled ? 'Mute Sound' : 'Unmute Sound';
     if (this.homeSfxBtn) {
-      this.homeSfxBtn.innerText = icon;
+      this.homeSfxBtn.innerHTML = iconSvg;
       this.homeSfxBtn.title = title;
     }
     if (this.gameSfxBtn) {
-      this.gameSfxBtn.innerText = icon;
+      this.gameSfxBtn.innerHTML = iconSvg;
       this.gameSfxBtn.title = title;
     }
   }
