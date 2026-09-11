@@ -70,12 +70,12 @@ class AudioManager {
     const baseFreq = 520 + Math.min(combo, 15) * 45;
     if (inDangerZone) {
       this.playTone(baseFreq, 0.22, 'triangle', 0.16);
-    setTimeout(() => this.playTone(baseFreq * 1.25, 0.18, 'sine', 0.14), 45);
+      setTimeout(() => this.playTone(baseFreq * 1.25, 0.18, 'sine', 0.14), 45);
       setTimeout(() => this.playTone(baseFreq * 1.5, 0.25, 'sine', 0.12), 90);
     } else {
       this.playTone(baseFreq, 0.18, 'sine', 0.14);
       setTimeout(() => this.playTone(baseFreq * 1.25, 0.15, 'sine', 0.1), 50);
-    
+
     }
   }
 
@@ -115,7 +115,7 @@ class AudioManager {
     if (!this.soundEnabled || this.bgmInterval) return;
     this.bgmInterval = window.setInterval(() => {
       if (!this.soundEnabled) return;
-    const freq = this.winterMelody[this.noteIdx % this.winterMelody.length];
+      const freq = this.winterMelody[this.noteIdx % this.winterMelody.length];
       this.playTone(freq, 0.45, 'sine', 0.025);
       this.noteIdx++;
     }, 480);

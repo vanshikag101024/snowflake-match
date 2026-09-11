@@ -9,11 +9,12 @@ export class UIController {
   private levelEl: HTMLElement | null;
   private livesEl: HTMLElement | null;
   private flakeContainer: HTMLElement | null;
-private dangerLine: HTMLElement | null;
+  private dangerLine: HTMLElement | null;
   private toastEl: HTMLElement | null;
   private buttonsGrid: HTMLElement | null;
   private homeSfxBtn: HTMLElement | null;
   private gameSfxBtn: HTMLElement | null;
+  private bestScoreEl: HTMLElement | null;
   private toastTimer: number | null = null;
 
   constructor() {
@@ -28,6 +29,7 @@ private dangerLine: HTMLElement | null;
     this.buttonsGrid = document.getElementById('buttons-grid');
     this.homeSfxBtn = document.getElementById('home-sfx-btn');
     this.gameSfxBtn = document.getElementById('game-sfx-btn');
+    this.bestScoreEl = document.getElementById('home-best-score');
   }
 
   public showHome(): void {
@@ -61,12 +63,18 @@ private dangerLine: HTMLElement | null;
     }
   }
 
+  public updateBestScore(score: number): void {
+    if (this.bestScoreEl) {
+      this.bestScoreEl.innerText = score.toLocaleString();
+    }
+  }
+
   public updateLives(lives: number): void {
     if (!this.livesEl) return;
     let html = '';
     for (let i = 0; i < 3; i++) {
       const active = i < lives;
-      html += `<div class="w-3 h-3 rounded-full ${active ? 'bg-rose-500' : 'bg-slate-700'}"></div>`;
+      html += `<div class="w-4 h-4 border-2 border-slate-900 ${active ? 'bg-red-500' : 'bg-slate-200'}"></div>`;
     }
     this.livesEl.innerHTML = html;
   }
@@ -122,17 +130,17 @@ private dangerLine: HTMLElement | null;
       const slotNum = idx + 1;
 
       const btn = document.createElement('button');
-      btn.className = `gem-btn-card relative flex flex-col items-center justify-center gap-1 p-3 rounded-xl border border-slate-700 text-slate-100 cursor-pointer select-none`;
+      btn.className = `gem-btn-card relative flex flex-col items-center justify-center gap-2 p-4 text-slate-900 cursor-pointer select-none`;
       btn.setAttribute('data-shape', shapeKey);
 
       btn.innerHTML = `
-        <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wide">
-          Key ${slotNum}
+        <span class="px-2.5 py-0.5 text-[11px] font-extrabold text-white bg-indigo-600 border-2 border-slate-900 uppercase tracking-wider shadow-[2px_2px_0_0_#0f172a]">
+          KEY ${slotNum}
         </span>
-        <div class="w-9 h-9 flex items-center justify-center my-0.5">
+        <div class="w-12 h-12 flex items-center justify-center my-1">
           ${def.gemSvg}
         </div>
-        <span class="text-xs font-bold text-slate-200">
+        <span class="text-xs font-extrabold text-slate-900 uppercase tracking-wider">
           ${def.title}
         </span>
       `;
@@ -147,7 +155,7 @@ private dangerLine: HTMLElement | null;
   }
 
   public updateAudioButtons(enabled: boolean): void {
-    const iconSvg = enabled 
+    const iconSvg = enabled
       ? `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>`
       : `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>`;
     const title = enabled ? 'Mute Sound' : 'Unmute Sound';

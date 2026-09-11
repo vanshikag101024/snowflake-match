@@ -11,110 +11,116 @@ export interface EnhancedCrystalDef extends CrystalDefinition {
 export const CRYSTAL_DEFINITIONS: Record<ShapeType, EnhancedCrystalDef> = {
   star: {
     id: 'star',
-    title: 'Nexus Star',
-    cssClass: 'bg-slate-900 hover:bg-slate-800',
-    borderClass: 'border-sky-500',
+    title: '3-Point Flake',
+    cssClass: 'bg-white hover:bg-sky-50',
+    borderClass: 'border-sky-600',
     color: '#0284c7',
     glowColor: '#0284c7',
     hotkey: '1',
-    badgeBg: 'bg-sky-500',
+    badgeBg: 'bg-sky-600',
     badgeText: 'text-white',
-    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-sky-400">
-      <g stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none">
-        <line x1="50" y1="10" x2="50" y2="90"/>
-        <line x1="15" y1="30" x2="85" y2="70"/>
-        <line x1="15" y1="70" x2="85" y2="30"/>
-        <polyline points="44,22 50,14 56,22"/>
-        <polyline points="44,78 50,86 56,78"/>
-        <polygon points="50,40 60,50 50,60 40,50" fill="#0284c7"/>
-      </g>
-      <circle cx="50" cy="50" r="7" fill="#38bdf8"/>
+    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-sky-600">
+      <path fill="currentColor" d="
+        M44 44 h12 v12 h-12 z
+        M44 14 h12 v30 h-12 z
+        M40 8 h20 v6 h-20 z
+        M18 64 h28 v12 h-28 z
+        M10 72 h12 v16 h-12 z
+        M54 64 h28 v12 h-28 z
+        M78 72 h12 v16 h-12 z
+      "/>
     </svg>`,
     svg: '',
-    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-white">
-      <g stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" fill="none">
-        <line x1="50" y1="10" x2="50" y2="90"/>
-        <line x1="15" y1="30" x2="85" y2="70"/>
-        <line x1="15" y1="70" x2="85" y2="30"/>
-        <polyline points="43,20 50,12 57,20"/>
-        <polyline points="43,80 50,88 57,80"/>
-        <polygon points="50,38 62,50 50,62 38,50" fill="#ffffff" fill-opacity="0.6"/>
-      </g>
-      <circle cx="50" cy="50" r="8" fill="#ffffff"/>
+    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-slate-900">
+      <path fill="#0f172a" d="
+        M44 44 h12 v12 h-12 z
+        M44 14 h12 v30 h-12 z
+        M40 8 h20 v6 h-20 z
+        M18 64 h28 v12 h-28 z
+        M10 72 h12 v16 h-12 z
+        M54 64 h28 v12 h-28 z
+        M78 72 h12 v16 h-12 z
+      "/>
     </svg>`
   },
   flower: {
     id: 'flower',
-    title: 'Frost Blossom',
-    cssClass: 'bg-slate-900 hover:bg-slate-800',
-    borderClass: 'border-purple-500',
-    color: '#a855f7',
-    glowColor: '#a855f7',
+    title: '4-Point Flake',
+    cssClass: 'bg-white hover:bg-purple-50',
+    borderClass: 'border-purple-600',
+    color: '#9333ea',
+    glowColor: '#9333ea',
     hotkey: '2',
-    badgeBg: 'bg-purple-500',
+    badgeBg: 'bg-purple-600',
     badgeText: 'text-white',
-    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-purple-400">
-      <g stroke="currentColor" stroke-width="4.5" stroke-linecap="round" fill="none">
-        <line x1="50" y1="16" x2="50" y2="84"/>
-        <line x1="21" y1="33" x2="79" y2="67"/>
-        <line x1="21" y1="67" x2="79" y2="33"/>
-      </g>
-      <circle cx="50" cy="16" r="6" fill="currentColor"/>
-      <circle cx="50" cy="84" r="6" fill="currentColor"/>
-      <circle cx="21" cy="33" r="6" fill="currentColor"/>
-      <circle cx="79" cy="67" r="6" fill="currentColor"/>
-      <circle cx="21" cy="67" r="6" fill="currentColor"/>
-      <circle cx="79" cy="33" r="6" fill="currentColor"/>
-      <circle cx="50" cy="50" r="14" fill="#c084fc" stroke="currentColor" stroke-width="3"/>
+    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-purple-600">
+      <path fill="currentColor" d="
+        M44 44 h12 v12 h-12 z
+        M44 10 h12 v34 h-12 z
+        M40 6 h20 v4 h-20 z
+        M44 56 h12 v34 h-12 z
+        M40 90 h20 v4 h-20 z
+        M10 44 h34 v12 h-34 z
+        M6 40 h4 v20 h-4 z
+        M56 44 h34 v12 h-34 z
+        M90 40 h4 v20 h-4 z
+      "/>
     </svg>`,
     svg: '',
-    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-white">
-      <g stroke="#ffffff" stroke-width="4" stroke-linecap="round" fill="none">
-        <line x1="50" y1="14" x2="50" y2="86"/>
-        <line x1="19" y1="32" x2="81" y2="68"/>
-        <line x1="19" y1="68" x2="81" y2="32"/>
-      </g>
-      <circle cx="50" cy="14" r="6" fill="#ffffff"/>
-      <circle cx="50" cy="86" r="6" fill="#ffffff"/>
-      <circle cx="19" cy="32" r="6" fill="#ffffff"/>
-      <circle cx="81" cy="68" r="6" fill="#ffffff"/>
-      <circle cx="19" cy="68" r="6" fill="#ffffff"/>
-      <circle cx="81" cy="32" r="6" fill="#ffffff"/>
-      <circle cx="50" cy="50" r="15" fill="#ffffff" fill-opacity="0.6" stroke="#ffffff" stroke-width="3"/>
+    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-slate-900">
+      <path fill="#0f172a" d="
+        M44 44 h12 v12 h-12 z
+        M44 10 h12 v34 h-12 z
+        M40 6 h20 v4 h-20 z
+        M44 56 h12 v34 h-12 z
+        M40 90 h20 v4 h-20 z
+        M10 44 h34 v12 h-34 z
+        M6 40 h4 v20 h-4 z
+        M56 44 h34 v12 h-34 z
+        M90 40 h4 v20 h-4 z
+      "/>
     </svg>`
   },
   needle: {
     id: 'needle',
-    title: 'Crystal Prism',
-    cssClass: 'bg-slate-900 hover:bg-slate-800',
-    borderClass: 'border-emerald-500',
-    color: '#10b981',
-    glowColor: '#10b981',
+    title: '5-Point Flake',
+    cssClass: 'bg-white hover:bg-emerald-50',
+    borderClass: 'border-emerald-600',
+    color: '#059669',
+    glowColor: '#059669',
     hotkey: '3',
-    badgeBg: 'bg-emerald-500',
+    badgeBg: 'bg-emerald-600',
     badgeText: 'text-white',
-    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-emerald-400">
-      <g stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none">
-        <line x1="50" y1="10" x2="50" y2="90"/>
-        <line x1="18" y1="50" x2="82" y2="50"/>
-        <polyline points="41,22 50,12 59,22"/>
-        <polyline points="41,78 50,88 59,78"/>
-        <polyline points="28,41 18,50 28,59"/>
-        <polyline points="72,41 82,50 72,59"/>
-      </g>
-      <polygon points="50,34 66,50 50,66 34,50" fill="#059669" stroke="currentColor" stroke-width="2"/>
+    gemSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-emerald-600">
+      <path fill="currentColor" d="
+        M44 44 h12 v12 h-12 z
+        M44 10 h12 v34 h-12 z
+        M40 6 h20 v4 h-20 z
+        M14 30 h30 v12 h-30 z
+        M8 26 h6 v20 h-6 z
+        M56 30 h30 v12 h-30 z
+        M86 26 h6 v20 h-6 z
+        M20 70 h24 v12 h-24 z
+        M12 78 h8 v12 h-8 z
+        M56 70 h24 v12 h-24 z
+        M80 78 h8 v12 h-8 z
+      "/>
     </svg>`,
     svg: '',
-    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-white">
-      <g stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" fill="none">
-        <line x1="50" y1="10" x2="50" y2="90"/>
-        <line x1="18" y1="50" x2="82" y2="50"/>
-        <polyline points="41,22 50,12 59,22"/>
-        <polyline points="41,78 50,88 59,78"/>
-        <polyline points="28,41 18,50 28,59"/>
-        <polyline points="72,41 82,50 72,59"/>
-      </g>
-      <polygon points="50,34 66,50 50,66 34,50" fill="#ffffff" fill-opacity="0.6" stroke="#ffffff" stroke-width="2"/>
+    fallingSvg: `<svg viewBox="0 0 100 100" class="w-full h-full text-slate-900">
+      <path fill="#0f172a" d="
+        M44 44 h12 v12 h-12 z
+        M44 10 h12 v34 h-12 z
+        M40 6 h20 v4 h-20 z
+        M14 30 h30 v12 h-30 z
+        M8 26 h6 v20 h-6 z
+        M56 30 h30 v12 h-30 z
+        M86 26 h6 v20 h-6 z
+        M20 70 h24 v12 h-24 z
+        M12 78 h8 v12 h-8 z
+        M56 70 h24 v12 h-24 z
+        M80 78 h8 v12 h-8 z
+      "/>
     </svg>`
   }
 };

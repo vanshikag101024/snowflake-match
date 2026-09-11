@@ -4,47 +4,33 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Snowflake Matcher</title>
-  <meta name="description" content="A simple pattern matching game." />
-  
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="A fast-paced rhythm and pattern matching game." />
   
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet"/>
-  
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-  <script type="module" crossorigin src="/assets/index-BS9mFyAE.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-BOUUFrwp.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Dela+Gothic+One&display=swap" rel="stylesheet"/>
+  <script type="module" crossorigin src="/assets/index-25vGrlqs.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CmstuHmI.css">
 </head>
-<body class="fixed inset-0 h-screen w-screen overflow-hidden flex flex-col justify-between text-slate-900 bg-slate-900 select-none font-sans">
+<body>
 
   <!-- Ambient snowfall canvas -->
-  <canvas class="fixed inset-0 z-10 pointer-events-none opacity-60" id="snowfall-canvas"></canvas>
+  <canvas id="snowfall-canvas"></canvas>
 
   <!-- HOME VIEW -->
-  <div class="relative z-20 flex flex-col items-center justify-center h-full w-full max-w-md mx-auto px-4 py-6 text-center" id="home-view">
+  <div class="view-container" id="home-view">
     
-    <div class="absolute top-4 right-4 z-30">
-      <button id="home-sfx-btn" onclick="toggleSFX()" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition cursor-pointer" title="Toggle Sound">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+    <div style="position: absolute; top: 1rem; right: 1rem; z-index: 30;">
+      <button id="home-sfx-btn" onclick="toggleSFX()" class="icon-btn" title="Toggle Sound">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
       </button>
     </div>
 
-    <main class="flex flex-col items-center justify-center text-center w-full my-auto">
+    <main class="flex flex-col items-center text-center w-full">
       
-      <!-- Icon -->
-      <div class="w-16 h-16 rounded-2xl bg-indigo-600 p-3 mb-4 flex items-center justify-center text-white shadow-lg">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-current" fill="none" stroke-width="6" stroke-linecap="round">
+      <!-- Brand Icon -->
+      <div class="brand-icon">
+        <svg viewBox="0 0 100 100" style="width: 100%; height: 100%; stroke: currentColor;" fill="none" stroke-width="6" stroke-linecap="round">
           <line x1="50" y1="10" x2="50" y2="90"/>
           <line x1="15" y1="30" x2="85" y2="70"/>
           <line x1="15" y1="70" x2="85" y2="30"/>
@@ -52,164 +38,130 @@
         </svg>
       </div>
 
-      <h1 class="text-3xl font-extrabold text-white tracking-tight">
+      <h1 class="game-title">
         Snowflake Matcher
       </h1>
-      <p class="mt-2 text-sm text-slate-400 font-medium">
+      <p class="game-subtitle">
         Match the falling shapes before they reach the bottom line.
       </p>
 
-      <!-- CTA Buttons -->
-      <div class="mt-8 w-full space-y-3">
-        <button class="w-full py-3.5 px-6 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base transition shadow-md active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2" onclick="switchToGame()">
+      <!-- Action Buttons -->
+      <div class="btn-group">
+        <button class="btn-primary" onclick="switchToGame()">
           <span>Start Game</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+          <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
         </button>
 
-        <div class="grid grid-cols-2 gap-2.5">
-          <button class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition cursor-pointer" onclick="openHowToPlayModal()">
-            How to Play
-          </button>
-          <button class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition cursor-pointer" onclick="openDailyGiftsModal()">
-            Rewards
-          </button>
-        </div>
+        <button class="btn-secondary" onclick="openHowToPlayModal()">
+          How to Play
+        </button>
       </div>
 
       <!-- High score indicator -->
-      <div class="mt-8 text-sm font-medium text-slate-400">
-        Best Score: <span class="text-indigo-400 font-bold" id="home-best-score">14,820</span>
+      <div class="high-score-tag">
+        Best Score: <strong id="home-best-score">14,820</strong>
       </div>
 
     </main>
   </div>
 
   <!-- GAME VIEW -->
-  <div class="hidden relative z-20 flex-col justify-between h-full w-full max-w-6xl mx-auto px-4 py-4 overflow-hidden" id="game-view">
+  <div class="view-container game-view-container hidden" id="game-view">
     
     <!-- Game Header HUD -->
-    <header class="flex-shrink-0 w-full flex items-center justify-between bg-slate-800 rounded-xl px-4 py-3 shadow">
-      <div class="flex items-center gap-3">
-        <button class="w-8 h-8 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-300 flex items-center justify-center transition cursor-pointer" onclick="switchToHome()" title="Menu">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+    <header class="hud-header">
+      <div class="flex items-center" style="gap: 0.75rem;">
+        <button class="icon-btn" style="width: 34px; height: 34px; border-radius: 10px;" onclick="switchToHome()" title="Menu">
+          <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <span class="text-sm font-bold text-slate-200" id="game-level-display">Level 1</span>
+        <span class="hud-level" id="game-level-display">Level 1</span>
       </div>
 
-      <div class="flex items-center gap-6">
-        <div class="text-center">
-          <span class="text-xs text-slate-400 block font-medium">Score</span>
-          <span class="text-xl font-extrabold text-indigo-400 leading-none" id="game-score-display">0</span>
+      <div class="flex items-center" style="gap: 1.5rem;">
+        <div class="hud-score-box">
+          <span class="hud-score-label">Score</span>
+          <span class="hud-score-value" id="game-score-display">0</span>
         </div>
 
-        <div class="flex items-center gap-1.5" id="game-lives-display">
+        <div class="lives-container" id="game-lives-display">
           <!-- Populated by JS -->
         </div>
 
-        <button class="w-8 h-8 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-300 flex items-center justify-center transition cursor-pointer" id="game-sfx-btn" onclick="toggleSFX()" title="Sound">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+        <button class="icon-btn" style="width: 34px; height: 34px; border-radius: 10px;" id="game-sfx-btn" onclick="toggleSFX()" title="Sound">
+          <svg style="width: 16px; height: 16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
         </button>
       </div>
     </header>
 
     <!-- Falling Arena Box -->
-    <main class="relative flex-1 w-full overflow-hidden my-3 pointer-events-none rounded-xl border border-slate-800 bg-slate-950/50" id="arena-box">
+    <main class="arena-box" id="arena-box">
       <div id="falling-snowflake"></div>
       <div class="catch-zone-line" id="catch-zone-line"></div>
-      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 z-40 hidden px-4 py-1.5 rounded-lg font-bold text-xs text-white bg-indigo-600 shadow" id="arena-toast">
+      <div class="arena-toast hidden" id="arena-toast">
         Match!
       </div>
     </main>
 
     <!-- Bottom Controls Footer -->
-    <footer class="flex-shrink-0 w-full flex flex-col items-center gap-2 pb-1">
-      <div class="text-xs text-slate-400 font-medium flex items-center gap-2">
+    <footer class="controls-footer">
+      <div class="key-legend-text">
         <span>Use keys 1, 2, 3</span>
       </div>
       
-      <div class="grid grid-cols-3 gap-3 w-full" id="buttons-grid">
+      <div class="buttons-grid" id="buttons-grid">
       </div>
     </footer>
   </div>
 
   <!-- MODAL: HOW TO PLAY -->
-  <div class="fixed inset-0 z-50 bg-slate-950/80 hidden items-center justify-center p-4" id="modal-how-to-play">
-    <div class="relative w-full max-w-sm bg-white text-slate-900 rounded-2xl p-6 shadow-xl">
-      <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition cursor-pointer p-1" onclick="closeModal('modal-how-to-play')">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  <div class="modal-overlay hidden" id="modal-how-to-play">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeModal('modal-how-to-play')">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
       
-      <h3 class="text-xl font-extrabold text-slate-900 mb-4">
+      <h3 class="modal-title">
         How to Play
       </h3>
       
-      <div class="space-y-3 text-sm text-slate-600">
-        <div class="flex items-start gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+      <div>
+        <div class="modal-step">
+          <span class="step-num">1</span>
           <div>Snowflakes fall down the screen.</div>
         </div>
-        <div class="flex items-start gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+        <div class="modal-step">
+          <span class="step-num">2</span>
           <div>Click the matching shape button (or press key 1, 2, or 3).</div>
         </div>
-        <div class="flex items-start gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
-          <div>Match near the bottom line for bonus catch points!</div>
+        <div class="modal-step">
+          <span class="step-num">3</span>
+          <div>Match near the bottom target line for bonus catch points!</div>
         </div>
       </div>
 
-      <button class="w-full mt-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm cursor-pointer transition" onclick="closeModal('modal-how-to-play')">
+      <button class="btn-primary" style="margin-top: 1.5rem; width: 100%;" onclick="closeModal('modal-how-to-play')">
         Got it!
       </button>
     </div>
   </div>
 
-  <!-- MODAL: DAILY GIFTS -->
-  <div class="fixed inset-0 z-50 bg-slate-950/80 hidden items-center justify-center p-4" id="modal-daily-gifts">
-    <div class="relative w-full max-w-sm bg-white text-slate-900 rounded-2xl p-6 shadow-xl text-center">
-      <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition cursor-pointer p-1" onclick="closeModal('modal-daily-gifts')">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-      
-      <h3 class="text-xl font-extrabold text-slate-900 mb-1">Daily Rewards</h3>
-      <p class="text-xs text-slate-500 mb-5">Claim free bonus items</p>
-      
-      <div class="grid grid-cols-2 gap-3 mb-5">
-        <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 flex flex-col items-center">
-          <span class="text-xs font-semibold text-slate-600">Crystals</span>
-          <span class="text-base font-bold text-indigo-600 mt-0.5">+250</span>
-          <button class="mt-2 w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold cursor-pointer transition" onclick="addCurrency('crystals', 250)">Claim</button>
-        </div>
-        <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 flex flex-col items-center">
-          <span class="text-xs font-semibold text-slate-600">Gems</span>
-          <span class="text-base font-bold text-purple-600 mt-0.5">+15</span>
-          <button class="mt-2 w-full py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-bold cursor-pointer transition" onclick="addCurrency('gems', 15)">Claim</button>
-        </div>
-      </div>
-
-      <button class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs cursor-pointer transition" onclick="closeModal('modal-daily-gifts')">
-        Close
-      </button>
-    </div>
-  </div>
-
   <!-- MODAL: GAME OVER -->
-  <div class="fixed inset-0 z-50 bg-slate-950/80 hidden items-center justify-center p-4" id="game-over-modal">
-    <div class="relative w-full max-w-sm bg-white text-slate-900 rounded-2xl p-6 shadow-xl text-center">
-      <h3 class="text-2xl font-extrabold text-slate-900 mb-1">Game Over</h3>
-      <p class="text-xs text-slate-500 mb-5">Out of lives! Give it another try.</p>
+  <div class="modal-overlay hidden" id="game-over-modal">
+    <div class="modal-card text-center">
+      <h3 class="modal-title" style="margin-bottom: 0.25rem;">Game Over</h3>
+      <p style="font-size: 0.85rem; color: #004e89; margin-bottom: 1.25rem; font-weight: 600;">Out of lives! Give it another try.</p>
 
-      <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 mb-5">
-        <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Final Score</div>
-        <div class="text-3xl font-extrabold text-indigo-600 mt-1" id="game-over-score">0</div>
-        <div class="text-xs text-emerald-600 font-bold mt-2 hidden" id="game-over-high-notice">NEW HIGH SCORE!</div>
+      <div class="score-summary-box">
+        <div class="score-summary-label">Final Score</div>
+        <div class="score-summary-value" id="game-over-score">0</div>
+        <div class="high-score-notice hidden" id="game-over-high-notice">NEW HIGH SCORE!</div>
       </div>
 
-      <div class="flex flex-col gap-2.5">
-        <button id="btn-retry-game" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm cursor-pointer transition">
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <button id="btn-retry-game" class="btn-primary">
           Play Again
         </button>
-        <button id="btn-menu-game" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs cursor-pointer transition">
+        <button id="btn-menu-game" class="btn-secondary">
           Main Menu
         </button>
       </div>
@@ -217,10 +169,8 @@
   </div>
 
   <!-- TOAST BANNER -->
-  <div class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toast-banner">
-    <div class="bg-slate-800 text-white text-xs px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
-      <span id="toast-message">Notification</span>
-    </div>
+  <div class="toast-banner" id="toast-banner">
+    <span id="toast-message">Notification</span>
   </div>
 
 </body>

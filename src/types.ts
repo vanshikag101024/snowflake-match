@@ -14,7 +14,7 @@ export interface SnowflakeInstance {
 export interface CrystalDefinition {
   id: ShapeType;
   title: string;
-cssClass: string;
+  cssClass: string;
   color: string;
   glowColor: string;
   hotkey: string;

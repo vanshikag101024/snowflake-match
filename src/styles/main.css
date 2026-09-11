@@ -1,4 +1,4 @@
-/* Simple Clean CSS */
+/* Clean Pixel-Brutalist CSS for Light Theme */
 
 .catch-zone-line {
   position: absolute;
@@ -7,7 +7,6 @@
   bottom: 15%;
   height: 3px;
   background: #f59e0b;
-  border-radius: 9999px;
   transition: all 0.15s ease-out;
   pointer-events: none;
 }
@@ -28,18 +27,40 @@
   pointer-events: none;
 }
 
-/* Simple button cards */
+/* Button cards styling for light theme */
 .gem-btn-card {
-  transition: background-color 0.15s ease, transform 0.1s ease;
-  background: #1e293b;
-  border: 1px solid #334155;
+  transition: all 0.12s ease;
+  background-color: #ffffff !important;
+  border: 4px solid #0f172a !important;
+  box-shadow: 4px 4px 0 0 #0f172a !important;
 }
 
 .gem-btn-card:hover {
-  background: #334155;
-  transform: translateY(-1px);
+  background-color: #f1f5f9 !important;
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 0 #0f172a !important;
 }
 
 .gem-btn-card:active {
-  transform: translateY(1px);
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0 0 #0f172a !important;
+}
+
+/* Toast Banner */
+.toast-banner {
+  position: fixed;
+  top: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6rem);
+  z-index: 50;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  background: #ffffff;
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.875rem;
+  padding: 0.625rem 1.5rem;
+  border: 3px solid #0f172a;
+  box-shadow: 4px 4px 0 0 #0f172a;
 }

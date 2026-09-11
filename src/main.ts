@@ -79,6 +79,7 @@ function init(): void {
   game = new GameEngine({
     onScoreUpdate: (score, level, combo) => {
       if (ui) ui.updateScore(score, level, combo);
+      if (ui && game) ui.updateBestScore(game.getState().highScore);
     },
     onLivesUpdate: (lives) => {
       if (ui) ui.updateLives(lives);
@@ -104,6 +105,7 @@ function init(): void {
           inDangerZone ? '#f59e0b' : '#38bdf8'
         );
       }
+      if (game && ui) ui.updateBestScore(game.getState().highScore);
       if (particleEngine) {
         const arenaBox = document.getElementById('arena-box');
         if (arenaBox) {
@@ -117,13 +119,14 @@ function init(): void {
       if (ui) ui.showArenaToast('MISS!', '#ef4444');
     },
     onGameOver: (finalScore, isNewHighScore) => {
+      if (game && ui) ui.updateBestScore(game.getState().highScore);
       if (ui) {
         ui.showGameOver(
           finalScore,
           isNewHighScore,
-        () => {
+          () => {
             if (game) game.start();
-        },
+          },
           () => {
             if (ui) ui.showHome();
           }
@@ -134,6 +137,10 @@ function init(): void {
       if (ui) ui.setDangerZoneActive(active);
     }
   });
+
+  if (ui && game) {
+    ui.updateBestScore(game.getState().highScore);
+  }
 
   ui.renderButtons(game.getSlotOrder(), (chosenType) => {
     if (game) game.handleMatchAttempt(chosenType);

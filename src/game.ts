@@ -76,7 +76,7 @@ export class GameEngine {
     this.state.isGameRunning = false;
     if (this.animFrameId) {
       cancelAnimationFrame(this.animFrameId);
-       this.animFrameId = null;
+      this.animFrameId = null;
     }
     if (this.spawnTimeoutId) {
       clearTimeout(this.spawnTimeoutId);

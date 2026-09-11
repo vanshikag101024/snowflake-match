@@ -1,213 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Snowflake Matcher</title>
   <meta name="description" content="A simple pattern matching game." />
-  
+
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet"/>
-  
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['"Pixelify Sans"', 'sans-serif'],
           }
         }
       }
     }
   </script>
 </head>
-<body class="fixed inset-0 h-screen w-screen overflow-hidden flex flex-col justify-between text-slate-900 bg-slate-900 select-none font-sans">
+
+<body
+  class="fixed inset-0 h-screen w-screen overflow-hidden flex flex-col justify-between text-slate-900 bg-sky-50 select-none font-sans">
 
   <!-- Ambient snowfall canvas -->
-  <canvas class="fixed inset-0 z-10 pointer-events-none opacity-60" id="snowfall-canvas"></canvas>
+  <canvas class="fixed inset-0 z-10 pointer-events-none opacity-80" id="snowfall-canvas" style="image-rendering: pixelated; image-rendering: crisp-edges;"></canvas>
 
   <!-- HOME VIEW -->
-  <div class="relative z-20 flex flex-col items-center justify-center h-full w-full max-w-md mx-auto px-4 py-6 text-center" id="home-view">
-    
-    <div class="absolute top-4 right-4 z-30">
-      <button id="home-sfx-btn" onclick="toggleSFX()" class="w-10 h-10 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 flex items-center justify-center transition cursor-pointer" title="Toggle Sound">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+  <div
+    class="relative z-20 flex flex-col items-center justify-center h-full w-full max-w-md mx-auto px-4 py-6 text-center"
+    id="home-view">
+
+    <!-- Top Right Sound Toggle -->
+    <div class="fixed top-4 right-4 z-30">
+      <button id="home-sfx-btn" onclick="toggleSFX()"
+        class="w-10 h-10 border-2 border-slate-900 bg-white hover:bg-slate-100 text-slate-900 flex items-center justify-center transition cursor-pointer shadow-[2px_2px_0_0_#0f172a]"
+        title="Toggle Sound">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
+            d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+        </svg>
       </button>
     </div>
 
     <main class="flex flex-col items-center justify-center text-center w-full my-auto">
-      
-      <!-- Icon -->
-      <div class="w-16 h-16 rounded-2xl bg-indigo-600 p-3 mb-4 flex items-center justify-center text-white shadow-lg">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-current" fill="none" stroke-width="6" stroke-linecap="round">
-          <line x1="50" y1="10" x2="50" y2="90"/>
-          <line x1="15" y1="30" x2="85" y2="70"/>
-          <line x1="15" y1="70" x2="85" y2="30"/>
-          <circle cx="50" cy="50" r="14" fill="#ffffff" fill-opacity="0.2"/>
-        </svg>
-      </div>
 
-      <h1 class="text-3xl font-extrabold text-white tracking-tight">
-        Snowflake Matcher
+      <!-- BIG TITLE -->
+      <h1 class="text-6xl sm:text-8xl font-extrabold text-slate-900 tracking-wider uppercase leading-none mb-3" style="text-shadow: 4px 4px 0 #93c5fd;">
+        SNOWFLAKE<br/><span class="text-indigo-600">MATCHER</span>
       </h1>
-      <p class="mt-2 text-sm text-slate-400 font-medium">
-        Match the falling shapes before they reach the bottom line.
+
+      <p class="text-sm text-slate-600 font-semibold uppercase tracking-wide mb-8">
+        Match the falling shapes.
       </p>
 
-      <!-- CTA Buttons -->
-      <div class="mt-8 w-full space-y-3">
-        <button class="w-full py-3.5 px-6 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base transition shadow-md active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2" onclick="switchToGame()">
-          <span>Start Game</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg>
+      <!-- Minimal CTA Buttons -->
+      <div class="w-full space-y-3">
+        <button
+          class="w-full py-4 px-6 border-4 border-slate-900 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-lg uppercase transition-all cursor-pointer shadow-[4px_4px_0_0_#0f172a] active:translate-y-0.5 active:shadow-[1px_1px_0_0_#0f172a]"
+          onclick="switchToGame()">
+          Start Game
         </button>
 
-        <div class="grid grid-cols-2 gap-2.5">
-          <button class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition cursor-pointer" onclick="openHowToPlayModal()">
-            How to Play
-          </button>
-          <button class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition cursor-pointer" onclick="openDailyGiftsModal()">
-            Rewards
-          </button>
-        </div>
+        <button
+          class="w-full py-3 px-4 border-3 border-slate-900 bg-white hover:bg-slate-100 text-slate-900 text-sm font-extrabold uppercase transition-all cursor-pointer shadow-[3px_3px_0_0_#0f172a] active:translate-y-0.5 active:shadow-[1px_1px_0_0_#0f172a]"
+          onclick="openHowToPlayModal()">
+          How to Play
+        </button>
       </div>
 
-      <!-- High score indicator -->
-      <div class="mt-8 text-sm font-medium text-slate-400">
-        Best Score: <span class="text-indigo-400 font-bold" id="home-best-score">14,820</span>
+      <!-- Best Score Line -->
+      <div class="mt-8 text-xs font-bold text-slate-600 uppercase tracking-widest">
+        Best Score: <span class="text-indigo-600 font-extrabold text-sm" id="home-best-score">0</span>
       </div>
 
     </main>
   </div>
 
   <!-- GAME VIEW -->
-  <div class="hidden relative z-20 flex-col justify-between h-full w-full max-w-6xl mx-auto px-4 py-4 overflow-hidden" id="game-view">
-    
+  <div class="hidden relative z-20 flex-col justify-between h-full w-full max-w-5xl mx-auto px-4 py-4 overflow-hidden"
+    id="game-view">
+
     <!-- Game Header HUD -->
-    <header class="flex-shrink-0 w-full flex items-center justify-between bg-slate-800 rounded-xl px-4 py-3 shadow">
+    <header class="flex-shrink-0 w-full flex items-center justify-between border-4 border-slate-900 bg-white px-5 py-3 shadow-[5px_5px_0_0_#0f172a]">
       <div class="flex items-center gap-3">
-        <button class="w-8 h-8 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-300 flex items-center justify-center transition cursor-pointer" onclick="switchToHome()" title="Menu">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <button
+          class="w-10 h-10 border-2 border-slate-900 bg-white hover:bg-slate-100 text-slate-900 flex items-center justify-center transition cursor-pointer shadow-[2px_2px_0_0_#0f172a]"
+          onclick="switchToHome()" title="Menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5" d="M15 19l-7-7 7-7" />
+          </svg>
         </button>
-        <span class="text-sm font-bold text-slate-200" id="game-level-display">Level 1</span>
+        <span class="text-base font-extrabold text-slate-900 uppercase" id="game-level-display">Level 1</span>
       </div>
 
       <div class="flex items-center gap-6">
         <div class="text-center">
-          <span class="text-xs text-slate-400 block font-medium">Score</span>
-          <span class="text-xl font-extrabold text-indigo-400 leading-none" id="game-score-display">0</span>
+          <span class="text-[10px] text-slate-500 block uppercase font-extrabold tracking-widest">Score</span>
+          <span class="text-2xl font-extrabold text-indigo-600 leading-none" id="game-score-display">0</span>
         </div>
 
-        <div class="flex items-center gap-1.5" id="game-lives-display">
+        <div class="flex items-center gap-2" id="game-lives-display">
           <!-- Populated by JS -->
         </div>
 
-        <button class="w-8 h-8 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-300 flex items-center justify-center transition cursor-pointer" id="game-sfx-btn" onclick="toggleSFX()" title="Sound">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+        <button
+          class="w-10 h-10 border-2 border-slate-900 bg-white hover:bg-slate-100 text-slate-900 flex items-center justify-center transition cursor-pointer shadow-[2px_2px_0_0_#0f172a]"
+          id="game-sfx-btn" onclick="toggleSFX()" title="Sound">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2"
+              d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+          </svg>
         </button>
       </div>
     </header>
 
     <!-- Falling Arena Box -->
-    <main class="relative flex-1 w-full overflow-hidden my-3 pointer-events-none rounded-xl border border-slate-800 bg-slate-950/50" id="arena-box">
+    <main
+      class="relative flex-1 w-full overflow-hidden my-4 pointer-events-none border-4 border-slate-900 bg-sky-100/70 shadow-[inset_0_0_20px_rgba(148,163,184,0.3)]"
+      id="arena-box">
       <div id="falling-snowflake"></div>
-      <div class="catch-zone-line" id="catch-zone-line"></div>
-      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 z-40 hidden px-4 py-1.5 rounded-lg font-bold text-xs text-white bg-indigo-600 shadow" id="arena-toast">
+      <div class="catch-zone-line border-t-2 border-dashed border-slate-900 w-full absolute top-[80%]" id="catch-zone-line"></div>
+      <div
+        class="absolute top-1/3 left-1/2 -translate-x-1/2 z-40 hidden px-5 py-2.5 font-extrabold text-sm text-white bg-indigo-600 border-3 border-slate-900 shadow-[4px_4px_0_0_#0f172a] uppercase"
+        id="arena-toast">
         Match!
       </div>
     </main>
 
     <!-- Bottom Controls Footer -->
-    <footer class="flex-shrink-0 w-full flex flex-col items-center gap-2 pb-1">
-      <div class="text-xs text-slate-400 font-medium flex items-center gap-2">
-        <span>Use keys 1, 2, 3</span>
+    <footer class="flex-shrink-0 w-full flex flex-col items-center gap-3 pb-2">
+      <div class="text-xs text-slate-700 uppercase font-bold flex items-center gap-2">
+        <span>Press Keys 1, 2, or 3</span>
       </div>
-      
-      <div class="grid grid-cols-3 gap-3 w-full" id="buttons-grid">
+
+      <div class="grid grid-cols-3 gap-4 w-full" id="buttons-grid">
       </div>
     </footer>
   </div>
 
   <!-- MODAL: HOW TO PLAY -->
-  <div class="fixed inset-0 z-50 bg-slate-950/80 hidden items-center justify-center p-4" id="modal-how-to-play">
-    <div class="relative w-full max-w-sm bg-white text-slate-900 rounded-2xl p-6 shadow-xl">
-      <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition cursor-pointer p-1" onclick="closeModal('modal-how-to-play')">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+  <div class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4" id="modal-how-to-play">
+    <div class="relative w-full max-w-sm bg-white border-4 border-slate-900 text-slate-900 p-6 shadow-[8px_8px_0_0_#0f172a]">
+      <button class="absolute top-4 right-4 text-slate-900 hover:text-slate-600 transition cursor-pointer p-1"
+        onclick="closeModal('modal-how-to-play')">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
       </button>
-      
-      <h3 class="text-xl font-extrabold text-slate-900 mb-4">
+
+      <h3 class="text-xl font-extrabold text-slate-900 mb-6 uppercase">
         How to Play
       </h3>
-      
-      <div class="space-y-3 text-sm text-slate-600">
-        <div class="flex items-start gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
-          <div>Snowflakes fall down the screen.</div>
+
+      <div class="space-y-4 text-sm text-slate-700 font-semibold">
+        <div class="flex items-start gap-4">
+          <span
+            class="w-8 h-8 border-2 border-slate-900 bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0_0_#0f172a]">1</span>
+          <div class="mt-1">Shapes fall down the screen.</div>
         </div>
-        <div class="flex items-start gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
-          <div>Click the matching shape button (or press key 1, 2, or 3).</div>
+        <div class="flex items-start gap-4">
+          <span
+            class="w-8 h-8 border-2 border-slate-900 bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0_0_#0f172a]">2</span>
+          <div class="mt-1">Click the matching button or press 1, 2, 3.</div>
         </div>
-        <div class="flex items-start gap-3">
-          <span class="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
-          <div>Match near the bottom line for bonus catch points!</div>
+        <div class="flex items-start gap-4">
+          <span
+            class="w-8 h-8 border-2 border-slate-900 bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center flex-shrink-0 shadow-[2px_2px_0_0_#0f172a]">3</span>
+          <div class="mt-1">Match near the bottom line for bonus points!</div>
         </div>
       </div>
 
-      <button class="w-full mt-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm cursor-pointer transition" onclick="closeModal('modal-how-to-play')">
+      <button
+        class="w-full mt-8 py-3.5 border-3 border-slate-900 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-base uppercase cursor-pointer transition-all shadow-[4px_4px_0_0_#0f172a] active:translate-y-1 active:shadow-[1px_1px_0_0_#0f172a]"
+        onclick="closeModal('modal-how-to-play')">
         Got it!
       </button>
     </div>
   </div>
 
-  <!-- MODAL: DAILY GIFTS -->
-  <div class="fixed inset-0 z-50 bg-slate-950/80 hidden items-center justify-center p-4" id="modal-daily-gifts">
-    <div class="relative w-full max-w-sm bg-white text-slate-900 rounded-2xl p-6 shadow-xl text-center">
-      <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition cursor-pointer p-1" onclick="closeModal('modal-daily-gifts')">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
-      
-      <h3 class="text-xl font-extrabold text-slate-900 mb-1">Daily Rewards</h3>
-      <p class="text-xs text-slate-500 mb-5">Claim free bonus items</p>
-      
-      <div class="grid grid-cols-2 gap-3 mb-5">
-        <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 flex flex-col items-center">
-          <span class="text-xs font-semibold text-slate-600">Crystals</span>
-          <span class="text-base font-bold text-indigo-600 mt-0.5">+250</span>
-          <button class="mt-2 w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold cursor-pointer transition" onclick="addCurrency('crystals', 250)">Claim</button>
-        </div>
-        <div class="bg-slate-50 rounded-xl p-3 border border-slate-200 flex flex-col items-center">
-          <span class="text-xs font-semibold text-slate-600">Gems</span>
-          <span class="text-base font-bold text-purple-600 mt-0.5">+15</span>
-          <button class="mt-2 w-full py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-xs font-bold cursor-pointer transition" onclick="addCurrency('gems', 15)">Claim</button>
-        </div>
-      </div>
-
-      <button class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs cursor-pointer transition" onclick="closeModal('modal-daily-gifts')">
-        Close
-      </button>
-    </div>
-  </div>
-
   <!-- MODAL: GAME OVER -->
-  <div class="fixed inset-0 z-50 bg-slate-950/80 hidden items-center justify-center p-4" id="game-over-modal">
-    <div class="relative w-full max-w-sm bg-white text-slate-900 rounded-2xl p-6 shadow-xl text-center">
-      <h3 class="text-2xl font-extrabold text-slate-900 mb-1">Game Over</h3>
-      <p class="text-xs text-slate-500 mb-5">Out of lives! Give it another try.</p>
+  <div class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden items-center justify-center p-4" id="game-over-modal">
+    <div class="relative w-full max-w-sm bg-white border-4 border-slate-900 text-slate-900 p-6 shadow-[8px_8px_0_0_#0f172a] text-center">
+      <h3 class="text-3xl font-extrabold text-red-600 mb-1 uppercase" style="text-shadow: 2px 2px 0 #fca5a5;">Game Over</h3>
+      <p class="text-sm text-slate-600 mb-6 uppercase font-bold">Out of lives!</p>
 
-      <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 mb-5">
-        <div class="text-xs text-slate-500 uppercase tracking-wider font-semibold">Final Score</div>
-        <div class="text-3xl font-extrabold text-indigo-600 mt-1" id="game-over-score">0</div>
-        <div class="text-xs text-emerald-600 font-bold mt-2 hidden" id="game-over-high-notice">NEW HIGH SCORE!</div>
+      <div class="bg-sky-50 border-2 border-slate-900 p-6 mb-6 shadow-[3px_3px_0_0_#0f172a]">
+        <div class="text-xs text-slate-600 uppercase tracking-widest font-extrabold">Final Score</div>
+        <div class="text-4xl font-extrabold text-indigo-600 mt-2" id="game-over-score">0</div>
+        <div class="text-sm text-emerald-600 font-extrabold mt-4 uppercase hidden" id="game-over-high-notice">NEW HIGH SCORE!</div>
       </div>
 
-      <div class="flex flex-col gap-2.5">
-        <button id="btn-retry-game" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm cursor-pointer transition">
+      <div class="flex flex-col gap-3">
+        <button id="btn-retry-game"
+          class="w-full py-4 border-3 border-slate-900 bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold text-base uppercase cursor-pointer transition-all shadow-[4px_4px_0_0_#0f172a] active:translate-y-1 active:shadow-[1px_1px_0_0_#0f172a]">
           Play Again
         </button>
-        <button id="btn-menu-game" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs cursor-pointer transition">
+        <button id="btn-menu-game"
+          class="w-full py-3 border-2 border-slate-900 bg-white hover:bg-slate-100 text-slate-900 font-extrabold text-sm uppercase cursor-pointer transition-all shadow-[4px_4px_0_0_#0f172a]">
           Main Menu
         </button>
       </div>
@@ -215,12 +211,15 @@
   </div>
 
   <!-- TOAST BANNER -->
-  <div class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="toast-banner">
-    <div class="bg-slate-800 text-white text-xs px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
+  <div
+    class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none"
+    id="toast-banner">
+    <div class="bg-white border-3 border-slate-900 text-slate-900 text-sm px-5 py-3 shadow-[4px_4px_0_0_#0f172a] flex items-center gap-2 uppercase font-extrabold">
       <span id="toast-message">Notification</span>
     </div>
   </div>
 
   <script type="module" src="/src/main.ts"></script>
 </body>
+
 </html>
