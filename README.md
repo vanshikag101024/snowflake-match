@@ -5,15 +5,15 @@ Super fun cool game where falling snowflakes come down and you have to catch the
 ### Description :-
 This is my super epic game about catching pretty snowflakes in a futuristic space matrix background. When snowflakes fall down on the screen you have to press keys or click buttons to match the shape like star flower or needle. If you hit right key you get big score and combo score! But if you miss you lose life and game gets super fast and crazy. I built this with HTML and typescript and vite because it makes it run fast on web browser. You can play to get high score and get cool shiny crystals!
 
-Screenshots sample -
+### Screenshots sample -
 
-Here is HOMEPAGE of the game:
+HOMEPAGE of the game:
 ![Screenshot 1](IMG1.png)
 
-Here is PLAYZONE of the game:
+PLAYZONE in the game:
 ![Screenshot 2](IMG2.png)
 
-Here is PLAY AGAIN conatiner:
+PLAY AGAIN the game:
 ![Screenshot 3](IMG3.png)
 
 ### Dependencies:-
